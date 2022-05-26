@@ -1,0 +1,117 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class Enemy : MonoBehaviour
+{
+
+    private Rigidbody2D rb;
+    public Transform rotator;
+    
+    public float rotationSpeed;
+    public float movementSpeed;
+
+    public Transform tower;
+
+    private Vector2 desiredDirection;
+    private Vector2 desiredPosition;
+
+    private bool rotating;
+    private bool moving;
+
+    void Start()
+    {
+        rb = GetComponent<Rigidbody2D>();
+    }
+
+
+    void FixedUpdate()
+    {
+        rotator.transform.localPosition = new Vector2(0, -0.0625f);
+        
+        if (rotating)ExecuteRotation();
+        if(moving) ExecuteMovement();
+
+       
+    }
+
+    
+
+    public void RotateToFace(Vector2 point)
+    {
+        Vector2 pointPosVector = point - (Vector2)transform.position;
+        float rotation = Mathf.Acos(Vector2.Dot(pointPosVector, Vector2.up) / pointPosVector.magnitude); //omg Mathematik Untericht
+        rotation *= Mathf.Rad2Deg;
+        if (pointPosVector.x > 0) rotation = -rotation; //omg das macht das es funktiniert
+        rotator.eulerAngles = new Vector3(0f, 0f, rotation);;
+
+    }
+
+    public bool CheckLineOfSight()
+    {
+        RaycastHit2D raycast = Physics2D.Raycast(transform.position, GameManager.player.transform.position - transform.position);
+        Debug.DrawRay(transform.position, GameManager.player.transform.position);
+        return raycast.collider == GameManager.player.GetComponent<Collider2D>();
+       
+    }
+
+    public bool CheckDistance(float range)
+    {
+        return Vector2.Distance(transform.position, GameManager.player.transform.position) <= range;
+    }
+
+    public void SetDesiredRotation(Vector2 point)
+    {
+        desiredDirection = point;
+        rotating = true;
+    }
+
+    public void MoveToPositionInSight(Vector2 point)
+    {
+        desiredDirection = desiredPosition = point;
+        rotating = true;
+        moving = true;
+
+    }
+
+
+    private void ExecuteRotation()
+    {
+        Vector2 pointPosVector = desiredDirection - (Vector2)transform.position;
+        float desiredRotation = Mathf.Acos(Vector2.Dot(pointPosVector, Vector2.up) / pointPosVector.magnitude);
+        desiredRotation *= Mathf.Rad2Deg;
+        if (pointPosVector.x > 0) desiredRotation = -desiredRotation;
+
+
+        float turnDirection = -Vector3.Cross(transform.up, transform.position - (Vector3)desiredDirection).normalized.z;
+        if (LooksInDesiredDirection())
+        {
+            rb.rotation = desiredRotation;
+            rotating = false;
+
+        }
+        //wenn direket dahinter snappt aber grad kb das zu fixen lol
+        else rb.rotation += rotationSpeed * turnDirection;
+    
+    }
+
+    private void ExecuteMovement()
+    {
+        if (rotating) return;
+        Vector2 p = (Vector2)transform.position - desiredPosition;
+        if (decimal.Round((decimal)p.x, 1) == 0 && decimal.Round((decimal)p.y, 1) == 0) moving = false;
+        else rb.position += (Vector2)((movementSpeed * movementSpeed / 100) * transform.up);
+    }
+
+    private bool LooksInDesiredDirection()
+    {
+        Vector3 rot = Vector3.Cross(transform.up, transform.position - (Vector3)desiredDirection);
+        return Mathf.RoundToInt(rot.z) == 0;
+    }
+
+
+    
+
+
+
+}
