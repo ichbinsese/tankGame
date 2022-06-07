@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class StationaryEnemyAI : EnemyAI
 {
+    /*
     protected override void Update()
     {
         base.Update();
@@ -17,6 +18,6 @@ public class StationaryEnemyAI : EnemyAI
         base.OnPlayerSpot();
         attack.SetCooldown();
     }
-
+*/
 
 }

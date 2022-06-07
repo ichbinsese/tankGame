@@ -7,8 +7,8 @@ public class BreakableWall : MonoBehaviour
 {
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        Bullet bullet;
-        if (collision.collider.TryGetComponent<Bullet>(out bullet)){
+        Rocket rocket;
+        if (collision.collider.TryGetComponent<Rocket>(out rocket)){
             Vector3 hitPosition = Vector3.zero;
             foreach (ContactPoint2D hit in collision.contacts)
             {

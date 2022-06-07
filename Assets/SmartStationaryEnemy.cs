@@ -5,7 +5,8 @@ using UnityEngine;
 
 public class SmartStationaryEnemy : EnemyAI
 {
-   private int tries = 100;
+   /*
+   private int _tries = 100;
    protected override void Update()
    {
       //base.Update();
@@ -23,9 +24,9 @@ public class SmartStationaryEnemy : EnemyAI
 
    protected virtual void TryFire()
    {
-      for (int i = 0; i < tries; i++)
+      for (int i = 0; i < _tries; i++)
       {
-         float p = (float)i / (float)tries * 2*Mathf.PI;
+         float p = (float)i / (float)_tries * 2*Mathf.PI;
          Vector2 direction = new Vector2(Mathf.Sin(p), Mathf.Cos(p));
          Vector2 startDirection = direction;
          
@@ -60,4 +61,5 @@ public class SmartStationaryEnemy : EnemyAI
       }
       if(playerInSight) OnPlayerLoss();
    }
+   */
 }

@@ -1,25 +1,33 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    private Rigidbody2D rb;
+    private Rigidbody2D _rb;
     public Transform rotator;
     public Transform tower;
 
     public float rotationSpeed;
     public float movementSpeed;
 
+
+    public TextMeshProUGUI txt;
+
     // Start is called before the first frame update
     void Start()
     {
-        rb = GetComponent<Rigidbody2D>();
+        _rb = GetComponent<Rigidbody2D>();
     }
 
     // Update is called once per frame
     void FixedUpdate()
     {
+
+        movementSpeed += Input.mouseScrollDelta.y / 4;
+        txt.text = movementSpeed.ToString();
+        
 
         //rotation
         Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
@@ -33,8 +41,8 @@ public class PlayerController : MonoBehaviour
         float radialMovement = Input.GetAxis("Horizontal");
         float vericalMovement = Input.GetAxis("Vertical");
 
-        rb.rotation -= radialMovement * rotationSpeed;
-        rb.position +=  (Vector2) ((vericalMovement * movementSpeed / 100) * transform.up);
+        _rb.rotation -= radialMovement * rotationSpeed;
+        _rb.position -=  (Vector2) ((vericalMovement * movementSpeed / 100) * transform.up);
         //rotator.transform.localPosition = new Vector2(0, -0.0625f);
         
 

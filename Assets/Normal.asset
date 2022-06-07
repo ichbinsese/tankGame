@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e57dd425612f290439022b7cb5d322cf, type: 3}
   m_Name: Normal
   m_EditorClassIdentifier: 
-  projectile: {fileID: 8813791709036516344, guid: a2b6fa8db4738e843af90d9ca9218bf6, type: 3}
+  projectile: {fileID: 8813791709036516344, guid: 31dcf1c5e99cfce4291344f5be57b0d5, type: 3}
   fireSpeed: 1
   durability: 3
   predictionLenght: 8
+  damage: 1

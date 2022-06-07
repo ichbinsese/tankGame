@@ -5,7 +5,7 @@ using UnityEngine;
 public class Enemy : MonoBehaviour
 {
 
-    private Rigidbody2D rb;
+    private Rigidbody2D _rb;
     public Transform rotator;
     
     public float rotationSpeed;
@@ -13,15 +13,15 @@ public class Enemy : MonoBehaviour
 
     public Transform tower;
 
-    private Vector2 desiredDirection;
-    private Vector2 desiredPosition;
+    private Vector2 _desiredDirection;
+    private Vector2 _desiredPosition;
 
-    private bool rotating;
-    private bool moving;
+    private bool _rotating;
+    private bool _moving;
 
     void Start()
     {
-        rb = GetComponent<Rigidbody2D>();
+        _rb = GetComponent<Rigidbody2D>();
     }
 
 
@@ -29,8 +29,8 @@ public class Enemy : MonoBehaviour
     {
         rotator.transform.localPosition = new Vector2(0, -0.0625f);
         
-        if (rotating)ExecuteRotation();
-        if(moving) ExecuteMovement();
+        if (_rotating)ExecuteRotation();
+        if(_moving) ExecuteMovement();
 
        
     }
@@ -39,11 +39,7 @@ public class Enemy : MonoBehaviour
 
     public void RotateToFace(Vector2 point)
     {
-        Vector2 pointPosVector = point - (Vector2)transform.position;
-        float rotation = Mathf.Acos(Vector2.Dot(pointPosVector, Vector2.up) / pointPosVector.magnitude); //omg Mathematik Untericht
-        rotation *= Mathf.Rad2Deg;
-        if (pointPosVector.x > 0) rotation = -rotation; //omg das macht das es funktiniert
-        rotator.eulerAngles = new Vector3(0f, 0f, rotation);;
+        
 
     }
 
@@ -62,50 +58,50 @@ public class Enemy : MonoBehaviour
 
     public void SetDesiredRotation(Vector2 point)
     {
-        desiredDirection = point;
-        rotating = true;
+        _desiredDirection = point;
+        _rotating = true;
     }
 
     public void MoveToPositionInSight(Vector2 point)
     {
-        desiredDirection = desiredPosition = point;
-        rotating = true;
-        moving = true;
+        _desiredDirection = _desiredPosition = point;
+        _rotating = true;
+        _moving = true;
 
     }
 
 
     private void ExecuteRotation()
     {
-        Vector2 pointPosVector = desiredDirection - (Vector2)transform.position;
+        Vector2 pointPosVector = _desiredDirection - (Vector2)transform.position;
         float desiredRotation = Mathf.Acos(Vector2.Dot(pointPosVector, Vector2.up) / pointPosVector.magnitude);
         desiredRotation *= Mathf.Rad2Deg;
         if (pointPosVector.x > 0) desiredRotation = -desiredRotation;
 
 
-        float turnDirection = -Vector3.Cross(transform.up, transform.position - (Vector3)desiredDirection).normalized.z;
+        float turnDirection = -Vector3.Cross(transform.up, transform.position - (Vector3)_desiredDirection).normalized.z;
         if (LooksInDesiredDirection())
         {
-            rb.rotation = desiredRotation;
-            rotating = false;
+            _rb.rotation = desiredRotation;
+            _rotating = false;
 
         }
         //wenn direket dahinter snappt aber grad kb das zu fixen lol
-        else rb.rotation += rotationSpeed * turnDirection;
+        else _rb.rotation += rotationSpeed * turnDirection;
     
     }
 
     private void ExecuteMovement()
     {
-        if (rotating) return;
-        Vector2 p = (Vector2)transform.position - desiredPosition;
-        if (decimal.Round((decimal)p.x, 1) == 0 && decimal.Round((decimal)p.y, 1) == 0) moving = false;
-        else rb.position += (Vector2)((movementSpeed * movementSpeed / 100) * transform.up);
+        if (_rotating) return;
+        Vector2 p = (Vector2)transform.position - _desiredPosition;
+        if (decimal.Round((decimal)p.x, 1) == 0 && decimal.Round((decimal)p.y, 1) == 0) _moving = false;
+        else _rb.position += (Vector2)((movementSpeed * movementSpeed / 100) * transform.up);
     }
 
     private bool LooksInDesiredDirection()
     {
-        Vector3 rot = Vector3.Cross(transform.up, transform.position - (Vector3)desiredDirection);
+        Vector3 rot = Vector3.Cross(transform.up, transform.position - (Vector3)_desiredDirection);
         return Mathf.RoundToInt(rot.z) == 0;
     }
 

@@ -9,16 +9,16 @@ public class EnemyAttack : MonoBehaviour
     public Transform bulletSpawner;
     
     public FireMode fireMode;
-    private float cooldown;
+    private float _cooldown;
 
     protected void Update()
     {
-        if (cooldown > 0) cooldown -= Time.deltaTime;
+        if (_cooldown > 0) _cooldown -= Time.deltaTime;
     }
 
     public virtual void Fire()
     {
-        if (cooldown > 0) return;
+        if (_cooldown > 0) return;
         foreach (Collider2D collider in FindObjectsOfType<Collider2D>())
         {
 
@@ -29,23 +29,24 @@ public class EnemyAttack : MonoBehaviour
         }
 
         GameObject bullet = Instantiate(fireMode.projectile, bulletSpawner.position, bulletSpawner.rotation);
-        bullet.GetComponent<Bullet>().colissionDurability = fireMode.durability;
+        bullet.GetComponent<Rocket>().colissionDurability = fireMode.durability;
+        bullet.GetComponent<Rocket>().hurtsEnemys = false;
         SetCooldown();
         
     }
 
     public void SetCooldown()
     {
-        cooldown = 1 / fireMode.fireSpeed;
+        _cooldown = 1 / fireMode.fireSpeed;
     }
 
     public void SetCooldown(float t)
     {
-        cooldown = t;
+        _cooldown = t;
     }
 
     public float GetCooldown()
     {
-        return cooldown;
+        return _cooldown;
     }
 }

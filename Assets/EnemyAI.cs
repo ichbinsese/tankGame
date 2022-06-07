@@ -5,36 +5,47 @@ using UnityEngine.Events;
 
 public class EnemyAI : MonoBehaviour
 {
-    protected Enemy enemy;
-    protected EnemyAttack attack;
-    protected bool playerInSight;
-    protected Vector2 lastPlayerPos;
-    public UnityEvent vent;
+    private EnemySight _sight;
+    public State state;
+    public UnityEvent onPlayerSpot;
+    public UnityEvent onSightLost;
+    public UnityEvent onPlayerLost;
     
-    protected virtual void Start()
+    
+    private void Start()
     {
-        enemy = GetComponent<Enemy>();
-        attack = GetComponent<EnemyAttack>();
-        
+        _sight = GetComponent<EnemySight>();
     }
 
-    protected virtual void Update()
+    private void Update()
     {
-        if (!playerInSight && enemy.CheckLineOfSight()) OnPlayerSpot();
-        if (playerInSight && !enemy.CheckLineOfSight()) OnPlayerLoss();
-
+        bool result = _sight.CheckSight();
+        if (result && state != State.Following)
+        {
+            onPlayerSpot.Invoke();
+            OnPlayerSpot();
+        } 
+        else if (!result && state == State.Following)
+        {
+            onSightLost.Invoke();
+            OnSightLost();
+        }
+    }
+    public  void OnPlayerSpot()
+    {
+        state = State.Following;
     }
 
-    protected virtual void OnPlayerSpot()
+    public void OnSightLost()
     {
-        playerInSight = true;
-        lastPlayerPos = GameManager.player.transform.position;
-
+        state = State.Searching;
     }
 
-    protected virtual void OnPlayerLoss()
+    public void OnPlayerLost()
     {
-        playerInSight = false;
-
+        state = State.Roaming;
     }
+    
+    
+    
 }
