@@ -17,6 +17,7 @@ public class BreakableWall : MonoBehaviour
 
                 print(hitPosition);
                 GetComponent<Tilemap>().SetTile(GetComponent<Tilemap>().WorldToCell(hitPosition), null);
+                FindObjectOfType<ShadowCreator>().UpdateBreakableShadows();
             }
                 //bullet.Explode();
         }

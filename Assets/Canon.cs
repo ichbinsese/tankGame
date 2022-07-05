@@ -31,7 +31,7 @@ public class Canon : Weapon
 
         GameObject bullet = Instantiate(fireMode.projectile, bulletSpawner.position, bulletSpawner.rotation);
         bullet.GetComponent<Rocket>().colissionDurability = fireMode.durability;
-        bullet.GetComponent<Rocket>().hurtsEnemys = false;
+        bullet.GetComponent<Rocket>().hurtsEnemys = fireMode.hurtsEnemy;
         SetCooldown();
     }
 }

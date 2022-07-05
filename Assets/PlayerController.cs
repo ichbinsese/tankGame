@@ -28,15 +28,7 @@ public class PlayerController : MonoBehaviour
         movementSpeed += Input.mouseScrollDelta.y / 4;
         txt.text = movementSpeed.ToString();
         
-
-        //rotation
-        Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        Vector2 mousePosVector = mousePos - (Vector2) transform.position;
-        float rotation = Mathf.Acos(Vector2.Dot(mousePosVector, Vector2.up) / mousePosVector.magnitude); //omg Mathematik Untericht
-        rotation *= Mathf.Rad2Deg;
-        if (mousePosVector.x > 0)rotation = -rotation; //omg das macht das es funktiniert
-        rotator.eulerAngles = new Vector3(0f, 0f, rotation);
-
+        
         //movement
         float radialMovement = Input.GetAxis("Horizontal");
         float vericalMovement = Input.GetAxis("Vertical");

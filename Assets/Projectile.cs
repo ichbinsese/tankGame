@@ -7,17 +7,17 @@ public class Projectile : MonoBehaviour
     public bool hurtsEnemys;
     public float speed;
     public int damage;
-    public virtual void OnCollisionProjectile(Collision collision )
+    public virtual void OnCollisionProjectile(Collision2D collision )
     {
         
     }
     
-    public virtual void OnCollisionTank(Collision collision )
+    public virtual void OnCollisionTank(Collision2D collision )
     {
         
     }
 
-    public virtual void OnCollisionTerrain(Collision collision )
+    public virtual void OnCollisionTerrain(Collision2D collision )
     {
         
     }
@@ -26,7 +26,7 @@ public class Projectile : MonoBehaviour
     {
         
     }
-    public virtual void OnCollisionEnter(Collision collision)
+    public virtual void OnCollisionEnter2D(Collision2D collision)
     {
         switch (collision.collider.gameObject.layer)
         {

@@ -20,14 +20,14 @@ public class Rocket : Projectile
         _rb.position += (Vector2) (speed / 100 * transform.up);
     }
 
-    public override void OnCollisionTerrain(Collision collision )
+    public override void OnCollisionTerrain(Collision2D collision )
     {
         if(_colissionsRemaining == 0) Explode();
         transform.up = Vector2.Reflect(transform.up, collision.contacts[0].normal);
         _colissionsRemaining--;
     }
 
-    public override void OnCollisionTank(Collision collision )
+    public override void OnCollisionTank(Collision2D collision )
     {
         Health health;
         if (!hurtsEnemys && collision.gameObject.TryGetComponent<Enemy>(out _))
@@ -40,7 +40,7 @@ public class Rocket : Projectile
         Explode();
     }
 
-    public override void OnCollisionProjectile(Collision collision )
+    public override void OnCollisionProjectile(Collision2D collision )
     {
         Explode();
     }

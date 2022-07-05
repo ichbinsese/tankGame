@@ -16,18 +16,22 @@ public class Weapon : MonoBehaviour
 
     public virtual void Fire(Vector2 position)
     {
-
-
+        
     }
 
     public virtual void Aim(Vector2 position)
     {
-        
+        Visualize();
     }
 
-    public void SetCooldown()
+    public virtual void SetCooldown()
     {
         _cooldown = 1 / fireMode.fireSpeed;
+    }
+
+    public virtual void Visualize()
+    {
+        
     }
 
 }

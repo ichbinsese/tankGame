@@ -12,6 +12,7 @@ public class FireMode : ScriptableObject
     public int durability;
     public float predictionLenght;
     public int damage;
+    public bool hurtsEnemy;
 
 
 }
