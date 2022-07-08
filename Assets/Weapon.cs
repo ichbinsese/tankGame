@@ -9,7 +9,7 @@ public class Weapon : MonoBehaviour
     protected float _cooldown;
 
 
-    public void Update()
+    public virtual void Update()
     {
         _cooldown -= Time.deltaTime;
     }

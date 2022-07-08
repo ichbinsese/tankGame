@@ -34,16 +34,19 @@ public class EnemyAI : MonoBehaviour
     public  void OnPlayerSpot()
     {
         state = State.Following;
+        onPlayerSpot.Invoke();
     }
 
     public void OnSightLost()
     {
         state = State.Searching;
+        onSightLost.Invoke();
     }
 
     public void OnPlayerLost()
     {
         state = State.Roaming;
+        onPlayerLost.Invoke();
     }
     
     

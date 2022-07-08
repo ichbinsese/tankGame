@@ -7,6 +7,12 @@ public class Projectile : MonoBehaviour
     public bool hurtsEnemys;
     public float speed;
     public int damage;
+
+    protected virtual void FixedUpdate()
+    {
+        Animate();
+    }
+
     public virtual void OnCollisionProjectile(Collision2D collision )
     {
         
@@ -26,6 +32,12 @@ public class Projectile : MonoBehaviour
     {
         
     }
+
+    protected virtual void Animate()
+    {
+        
+    }
+    
     public virtual void OnCollisionEnter2D(Collision2D collision)
     {
         switch (collision.collider.gameObject.layer)

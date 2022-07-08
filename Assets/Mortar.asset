@@ -17,4 +17,4 @@ MonoBehaviour:
   durability: 0
   predictionLenght: 0
   damage: 100
-  hurtsEnemy: 0
+  hurtsEnemy: 1

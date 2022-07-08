@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class MortarProjectile : Projectile
 {
+    public GameObject explosionEffect;
     public float maxSize;
     public float rotationSpeed;
     public float blastRadius;
@@ -13,14 +14,14 @@ public class MortarProjectile : Projectile
     private float _startDistance;
     private Rigidbody2D _rb;
     
-    void FixedUpdate()
+    protected override void FixedUpdate()
     {
+        base.FixedUpdate();
         _rb.position += (Vector2) (speed / 100 * transform.up);
-        Animation();
         CheckPosition();
     }
 
-    void CheckPosition()
+    private void CheckPosition()
     {
         Vector2 p = (Vector2)transform.position - _targetPoint;
         if (decimal.Round((decimal)p.x, 1) == 0 && decimal.Round((decimal)p.y, 1) == 0) Explode();
@@ -41,7 +42,7 @@ public class MortarProjectile : Projectile
     }
 
 
-    private void Animation()
+    protected override void Animate()
     {
         float progress =  ( Vector2.Distance(_targetPoint, new Vector2(transform.position.x, transform.position.y)) / _startDistance) * 2 ;
         progress--;
@@ -67,7 +68,7 @@ public class MortarProjectile : Projectile
             }
         }
         
-        
+        if(explosionEffect != null) Instantiate(explosionEffect, transform.position, transform.rotation);
         Destroy(gameObject);
     }
     
