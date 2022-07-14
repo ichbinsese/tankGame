@@ -28,6 +28,11 @@ public class Projectile : MonoBehaviour
         
     }
 
+    public virtual void OnCollisionOther(Collision2D collision)
+    {
+        
+    }
+
     public virtual void Explode()
     {
         
@@ -50,6 +55,9 @@ public class Projectile : MonoBehaviour
                 break;
             case 7:
                 OnCollisionTank(collision);
+                break;
+            default:
+                OnCollisionOther(collision);
                 break;
         }
     }

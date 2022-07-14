@@ -67,6 +67,7 @@ public class MortarProjectile : Projectile
                 health.TakeDamage(damage);
             }
         }
+        FindObjectOfType<BreakableWall>().DestroyPart(transform.position, Mathf.RoundToInt(blastRadius - 1));
         
         if(explosionEffect != null) Instantiate(explosionEffect, transform.position, transform.rotation);
         Destroy(gameObject);

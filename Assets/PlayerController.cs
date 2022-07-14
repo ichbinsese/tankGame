@@ -12,8 +12,7 @@ public class PlayerController : MonoBehaviour
     public float rotationSpeed;
     public float movementSpeed;
 
-
-    public TextMeshProUGUI txt;
+    
 
     // Start is called before the first frame update
     void Start()
@@ -26,8 +25,6 @@ public class PlayerController : MonoBehaviour
     {
 
         movementSpeed += Input.mouseScrollDelta.y / 4;
-        txt.text = movementSpeed.ToString();
-        
         
         //movement
         float radialMovement = Input.GetAxis("Horizontal");

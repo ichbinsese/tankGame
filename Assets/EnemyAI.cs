@@ -10,13 +10,10 @@ public class EnemyAI : MonoBehaviour
     public UnityEvent onPlayerSpot;
     public UnityEvent onSightLost;
     public UnityEvent onPlayerLost;
-    
-    
     private void Start()
     {
         _sight = GetComponent<EnemySight>();
     }
-
     private void Update()
     {
         bool result = _sight.CheckSight();
@@ -36,19 +33,14 @@ public class EnemyAI : MonoBehaviour
         state = State.Following;
         onPlayerSpot.Invoke();
     }
-
     public void OnSightLost()
     {
         state = State.Searching;
         onSightLost.Invoke();
     }
-
     public void OnPlayerLost()
     {
         state = State.Roaming;
         onPlayerLost.Invoke();
     }
-    
-    
-    
 }

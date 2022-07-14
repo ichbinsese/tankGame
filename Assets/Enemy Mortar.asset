@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Enemy Mortar
   m_EditorClassIdentifier: 
   projectile: {fileID: 7834602222842353662, guid: 97da0f13fb868b447b42e2182d711ada, type: 3}
-  fireSpeed: 1
+  fireSpeed: 0.25
   durability: 0
   predictionLenght: 0
   damage: 100

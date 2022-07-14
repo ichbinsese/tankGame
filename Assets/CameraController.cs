@@ -41,8 +41,7 @@ public class CameraController : MonoBehaviour
         transform.position = resultingPositon;
 
         _playerPositions.RemoveAt(followDelay);
-
-        print(CameraInsideZone());
+        
 
     }
 

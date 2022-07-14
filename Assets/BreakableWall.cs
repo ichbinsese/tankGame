@@ -22,4 +22,20 @@ public class BreakableWall : MonoBehaviour
                 //bullet.Explode();
         }
     }
+
+    public void DestroyPart(Vector2 position, int range)
+    {
+        Vector3Int posInt = GetComponent<Tilemap>().WorldToCell(position);
+        for (int x = -range ; x <= range; x++)
+        {
+            for (int y = -range; y <= range; y++)
+            {
+                
+                GetComponent<Tilemap>().SetTile(posInt + new Vector3Int(x,y),null);
+            }
+        }
+        FindObjectOfType<ShadowCreator>().UpdateBreakableShadows();
+       
+        
+    }
 }

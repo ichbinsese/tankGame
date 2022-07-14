@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
@@ -41,7 +42,9 @@ public class DirectLineMovementBehaviour : EnemyMovementBehaviour
         int layermask1 = 1 << 8;
         int layermask2 = 1 << 9;
         int finalmask  = layermask1 | layermask2;
-        RaycastHit2D raycast = Physics2D.Raycast(transform.position, GameManager.player.transform.position - transform.position,Vector2.Distance(_spawnPosition,transform.position),~finalmask);
+        RaycastHit2D raycast = Physics2D.Raycast(transform.position, 
+            GameManager.player.transform.position - transform.position,
+            Vector2.Distance(_spawnPosition,transform.position),~finalmask);
         if (raycast.collider != null)
         {
             onPlayerLost.Invoke();
@@ -68,12 +71,13 @@ public class DirectLineMovementBehaviour : EnemyMovementBehaviour
         float turnDirection = -Vector3.Cross(transform.up, transform.position - (Vector3)_desiredDirection).normalized.z;
         if (LooksInDesiredDirection())
         {
-            _rb.rotation = desiredRotation;
+           
+            if(!float.IsNaN(desiredRotation)) _rb.rotation = desiredRotation;
             _rotating = false;
 
         }
         //wenn direket dahinter snappt aber grad kb das zu fixen lol
-        else _rb.rotation += rotationSpeed * turnDirection;
+        else _rb.rotation += rotationSpeed * turnDirection  * Time.deltaTime * 10;
     
     }
     
@@ -90,7 +94,7 @@ public class DirectLineMovementBehaviour : EnemyMovementBehaviour
         if (_rotating) return;
         Vector2 p = (Vector2)transform.position - _desiredPosition;
         if (decimal.Round((decimal)p.x, 1) == 0 && decimal.Round((decimal)p.y, 1) == 0) _moving = false;
-        else _rb.position += (Vector2)((movementSpeed * movementSpeed / 100) * transform.up);
+        else _rb.position += (Vector2)((movementSpeed * movementSpeed / 10) * Time.deltaTime * transform.up);
     }
 
     

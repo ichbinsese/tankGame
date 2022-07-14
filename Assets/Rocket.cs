@@ -47,6 +47,11 @@ public class Rocket : Projectile
     {
         Explode();
     }
+
+    public override void OnCollisionOther(Collision2D collision)
+    {
+        Explode();
+    }
     
 
     public override void Explode()
